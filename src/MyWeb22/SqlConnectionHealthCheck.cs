@@ -12,8 +12,11 @@ namespace MyWeb22 {
 
         public string TestQuery { get; }
 
-        public SqlConnectionHealthCheck(string connectionString)
+        public bool Ok { set; get; }
+
+        public SqlConnectionHealthCheck(string connectionString, bool ok)
             : this(connectionString, testQuery: DefaultTestQuery) {
+            Ok = ok;
         }
 
         public SqlConnectionHealthCheck(string connectionString, string testQuery) {
@@ -22,7 +25,9 @@ namespace MyWeb22 {
         }
 
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default(CancellationToken)) {
-            return HealthCheckResult.Unhealthy("Can not connect to DB");
+            return Ok
+                ? HealthCheckResult.Healthy("OK")
+                : HealthCheckResult.Unhealthy("Error");
         }
     }
 }

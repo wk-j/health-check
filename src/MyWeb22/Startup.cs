@@ -25,9 +25,9 @@ namespace MyWeb22 {
         public void ConfigureServices(IServiceCollection services) {
             services
            .AddHealthChecks()
-           .AddCheck("Db1", new SqlConnectionHealthCheck(""))
-           .AddCheck("Db2", new SqlConnectionHealthCheck(""))
-           .AddCheck("Db3", new SqlConnectionHealthCheck(""));
+           .AddCheck("Db1", new SqlConnectionHealthCheck("", true))
+           .AddCheck("Db2", new SqlConnectionHealthCheck("", true))
+           .AddCheck("Db3", new SqlConnectionHealthCheck("", false));
 
             services.AddHealthChecksUI();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -48,7 +48,9 @@ namespace MyWeb22 {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
-            app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
+            app.UseHealthChecksUI(config => {
+                config.UIPath = "/hc-ui";
+            });
 
             // app.UseHttpsRedirection();
             app.UseMvc();
