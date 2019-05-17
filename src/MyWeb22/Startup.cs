@@ -25,9 +25,9 @@ namespace MyWeb22 {
         public void ConfigureServices(IServiceCollection services) {
             services
            .AddHealthChecks()
-           .AddCheck("Db1", new SqlConnectionHealthCheck("", true))
-           .AddCheck("Db2", new SqlConnectionHealthCheck("", true))
-           .AddCheck("Db3", new SqlConnectionHealthCheck("", false));
+           .AddCheck("192.168.0.101", new SqlConnectionHealthCheck("", true))
+           .AddCheck("192.168.0.102", new SqlConnectionHealthCheck("", true))
+           .AddCheck("192.168.0.103", new SqlConnectionHealthCheck("", false));
 
             services.AddHealthChecksUI();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
